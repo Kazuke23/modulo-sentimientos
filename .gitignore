@@ -1,0 +1,16 @@
+# Python
+backend/venv/
+backend/__pycache__/
+backend/*.pyc
+backend/.env
+backend/resultado_prueba.json
+
+# Node
+frontend/node_modules/
+
+# Docs
+docs/
+
+# Misc
+.DS_Store
+*.log

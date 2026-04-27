@@ -1,0 +1,81 @@
+/* src/styles/Resumen.css */
+.resumen-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 600px) {
+  .resumen-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.resumen-card {
+  border-radius: var(--radius-lg);
+  padding: 24px 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: default;
+}
+
+.resumen-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  filter: blur(20px);
+  opacity: 0.3;
+  transform: scale(1.2);
+  z-index: -1;
+}
+
+.resumen-card:hover { transform: translateY(-4px); }
+
+.card-pos {
+  background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(16,185,129,0.05));
+  border: 1px solid rgba(16,185,129,0.25);
+  box-shadow: 0 4px 24px rgba(16,185,129,0.1), inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+.card-neg {
+  background: linear-gradient(135deg, rgba(239,68,68,0.15), rgba(239,68,68,0.05));
+  border: 1px solid rgba(239,68,68,0.25);
+  box-shadow: 0 4px 24px rgba(239,68,68,0.1), inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+.card-neu {
+  background: linear-gradient(135deg, rgba(245,158,11,0.15), rgba(245,158,11,0.05));
+  border: 1px solid rgba(245,158,11,0.25);
+  box-shadow: 0 4px 24px rgba(245,158,11,0.1), inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+.card-total {
+  background: linear-gradient(135deg, rgba(0,212,255,0.12), rgba(124,58,237,0.08));
+  border: 1px solid rgba(0,212,255,0.2);
+  box-shadow: 0 4px 24px rgba(0,212,255,0.08), inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+.card-icon { font-size: 22px; margin-bottom: 10px; }
+
+.card-numero {
+  font-family: var(--font-display);
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.card-pos .card-numero  { color: var(--pos-color); }
+.card-neg .card-numero  { color: var(--neg-color); }
+.card-neu .card-numero  { color: var(--neu-color); }
+.card-total .card-numero { color: var(--accent-cyan); }
+
+.card-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}

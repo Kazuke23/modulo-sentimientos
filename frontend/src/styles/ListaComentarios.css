@@ -1,0 +1,111 @@
+/* src/styles/ListaComentarios.css */
+.lista-wrapper {
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: var(--shadow-card);
+}
+
+.comentario-item {
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.02);
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.comentario-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  border-radius: 0 2px 2px 0;
+}
+
+.comentario-item.pos::before { background: var(--pos-color); box-shadow: 2px 0 12px var(--pos-glow); }
+.comentario-item.neg::before { background: var(--neg-color); box-shadow: 2px 0 12px var(--neg-glow); }
+.comentario-item.neu::before { background: var(--neu-color); box-shadow: 2px 0 12px var(--neu-glow); }
+
+.comentario-item:hover {
+  background: rgba(255,255,255,0.05);
+  transform: translateX(4px);
+}
+
+.comentario-item.pos:hover { border-color: rgba(16,185,129,0.3); }
+.comentario-item.neg:hover { border-color: rgba(239,68,68,0.3); }
+.comentario-item.neu:hover { border-color: rgba(245,158,11,0.3); }
+
+.comentario-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.badge-pos { background: rgba(16,185,129,0.15); color: var(--pos-color); border: 1px solid rgba(16,185,129,0.3); }
+.badge-neg { background: rgba(239,68,68,0.15);  color: var(--neg-color); border: 1px solid rgba(239,68,68,0.3); }
+.badge-neu { background: rgba(245,158,11,0.15); color: var(--neu-color); border: 1px solid rgba(245,158,11,0.3); }
+
+.comentario-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.comentario-texto {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  font-weight: 300;
+}
+
+.probas-bar {
+  display: flex;
+  gap: 8px;
+}
+
+.proba-item {
+  flex: 1;
+  background: rgba(255,255,255,0.04);
+  border-radius: 6px;
+  padding: 6px 10px;
+  text-align: center;
+}
+
+.proba-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.proba-label.pos { color: var(--pos-color); }
+.proba-label.neg { color: var(--neg-color); }
+.proba-label.neu { color: var(--neu-color); }
+
+.proba-value {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
