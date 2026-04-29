@@ -23,13 +23,17 @@ export default function App() {
       const res = await axios.post("https://icy-overfill-footpad.ngrok-free.dev/analizar", {
         url,
         max_comentarios: maxComentarios,
+        },{
+        headers: {
+          "ngrok-skip-browser-warning": "true"
+        }
       })
       setResultado(res.data)
     } catch {
       setError("Error al conectar con el servidor. ¿Está corriendo FastAPI?")
     } finally {
       setCargando(false)
-    }
+    } 
   }
 
   return (
