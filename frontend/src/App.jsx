@@ -20,7 +20,7 @@ export default function App() {
     setError("")
     setResultado(null)
     try {
-      const res = await axios.post("https://icy-overfill-footpad.ngrok-free.dev/analizar", {
+      const res = await axios.post("https://icy-overfill-footpad.ngrok-free.dev", {
         url,
         max_comentarios: maxComentarios,
       })
