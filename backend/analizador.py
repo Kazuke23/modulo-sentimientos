@@ -1,7 +1,7 @@
 import requests
 import os
 
-API_URL = "https://api-inference.huggingface.co/models/cardiffnlp/twitter-xlm-roberta-base-sentiment"
+API_URL = "https://api-inference.huggingface.co/models/nlptown/bert-base-multilingual-uncased-sentiment"
 
 HEADERS = {
     "Authorization": f"Bearer {os.getenv('HF_TOKEN')}",
@@ -25,38 +25,35 @@ def analizar_sentimientos(comentarios: list) -> list:
                 timeout=15
             )
 
-            # 🔴 ERROR HTTP (como el 404 que tienes)
+            # ❌ Error HTTP
             if response.status_code != 200:
                 print(f"HF STATUS ERROR ({response.status_code}):", response.text)
-
-                resultado.append({
-                    **c,
-                    "sentimiento": "ERROR",
-                    "probabilidades": {"positivo": 0, "negativo": 0, "neutro": 0}
-                })
                 continue
 
             data = response.json()
 
-            # 🔴 ERROR DE HF (modelo cargando o fallo)
-            if isinstance(data, dict):
-                if "error" in data:
-                    print("HF ERROR:", data)
+            # ❌ Error de HF (modelo cargando o fallo)
+            if isinstance(data, dict) and "error" in data:
+                print("HF ERROR:", data)
+                continue
 
-                    resultado.append({
-                        **c,
-                        "sentimiento": "ERROR",
-                        "probabilidades": {"positivo": 0, "negativo": 0, "neutro": 0}
-                    })
-                    continue
-
-            # ✅ RESPUESTA NORMAL
+            # ✅ Respuesta correcta
             if isinstance(data, list) and len(data) > 0:
                 scores = data[0]
 
+                # 🔥 Tomar el score más alto
                 max_item = max(scores, key=lambda x: x["score"])
-                max_label = max_item["label"]
+                label = max_item["label"]  # ej: "1 star", "5 stars"
 
+                # 🔥 Convertir estrellas → sentimiento
+                if "1" in label or "2" in label:
+                    max_label = "NEG"
+                elif "3" in label:
+                    max_label = "NEU"
+                else:
+                    max_label = "POS"
+
+                # 🔥 Probabilidades agrupadas
                 probabilidades = {
                     "positivo": 0,
                     "negativo": 0,
@@ -64,34 +61,22 @@ def analizar_sentimientos(comentarios: list) -> list:
                 }
 
                 for item in scores:
-                    label = item["label"]
+                    lbl = item["label"]
                     score = round(item["score"], 3)
 
-                    if label == "POS":
-                        probabilidades["positivo"] = score
-                    elif label == "NEG":
-                        probabilidades["negativo"] = score
-                    elif label == "NEU":
-                        probabilidades["neutro"] = score
+                    if "1" in lbl or "2" in lbl:
+                        probabilidades["negativo"] += score
+                    elif "3" in lbl:
+                        probabilidades["neutro"] += score
+                    else:
+                        probabilidades["positivo"] += score
 
             else:
                 print("Respuesta inesperada HF:", data)
-
-                resultado.append({
-                    **c,
-                    "sentimiento": "ERROR",
-                    "probabilidades": {"positivo": 0, "negativo": 0, "neutro": 0}
-                })
                 continue
 
         except Exception as e:
             print("ERROR ANALISIS:", e)
-
-            resultado.append({
-                **c,
-                "sentimiento": "ERROR",
-                "probabilidades": {"positivo": 0, "negativo": 0, "neutro": 0}
-            })
             continue
 
         resultado.append({
