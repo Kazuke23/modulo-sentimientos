@@ -2,9 +2,10 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from scraper import extraer_comentarios
-from preprocesador import preprocesar_comentarios
-from analizador import analizar_sentimientos
+
+from backend.scraper import extraer_comentarios
+from backend.preprocesador import preprocesar_comentarios
+from backend.analizador import analizar_sentimientos
 
 app = FastAPI(title="API Análisis Semántico")
 
