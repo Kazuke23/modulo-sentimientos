@@ -1,4 +1,3 @@
-# backend/main.py
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -28,15 +27,32 @@ def inicio():
 def analizar(solicitud: SolicitudAnalisis):
     if not solicitud.url:
         raise HTTPException(status_code=400, detail="URL requerida")
+
     try:
-        comentarios       = extraer_comentarios(solicitud.url, solicitud.max_comentarios)
-        comentarios_limpios  = preprocesar_comentarios(comentarios)
+        comentarios = extraer_comentarios(
+            solicitud.url,
+            solicitud.max_comentarios
+        )
+
+        comentarios_limpios = preprocesar_comentarios(comentarios)
+
         comentarios_analizados = analizar_sentimientos(comentarios_limpios)
 
-        # Conteo de sentimientos
-        conteo = {"POS": 0, "NEG": 0, "NEU": 0}
+        # 🔥 Conteo robusto (incluye errores)
+        conteo = {
+            "POS": 0,
+            "NEG": 0,
+            "NEU": 0,
+            "ERROR": 0
+        }
+
         for c in comentarios_analizados:
-            conteo[c["sentimiento"]] += 1
+            sentimiento = c.get("sentimiento", "ERROR")
+
+            if sentimiento in conteo:
+                conteo[sentimiento] += 1
+            else:
+                conteo["ERROR"] += 1
 
         return {
             "url": solicitud.url,
@@ -44,5 +60,6 @@ def analizar(solicitud: SolicitudAnalisis):
             "resumen": conteo,
             "comentarios": comentarios_analizados
         }
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
