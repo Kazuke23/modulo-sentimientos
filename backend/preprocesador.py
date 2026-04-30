@@ -1,4 +1,3 @@
-# backend/preprocesador.py
 import re
 
 def limpiar_texto(texto: str) -> str:
@@ -8,27 +7,29 @@ def limpiar_texto(texto: str) -> str:
     # Quitar URLs
     texto = re.sub(r'http\S+|www\S+', '', texto)
     
-    # Quitar menciones @usuario
+    # Quitar menciones
     texto = re.sub(r'@\w+', '', texto)
     
-    # Quitar emojis y caracteres especiales no alfabéticos
-    texto = re.sub(r'[^\w\sáéíóúñüÁÉÍÓÚÑÜ.,!?]', '', texto)
-    
-    # Quitar espacios múltiples
+    # 🔥 NO elimines emojis completamente (ayudan al sentimiento)
+    # solo limpia espacios raros
     texto = re.sub(r'\s+', ' ', texto).strip()
     
     return texto
 
 def preprocesar_comentarios(comentarios: list) -> list:
     procesados = []
+
     for c in comentarios:
-        texto_limpio = limpiar_texto(c.get("texto", ""))
-        if texto_limpio:  # Ignorar comentarios vacíos tras limpiar
+        texto_original = c.get("texto", "")
+        texto_limpio = limpiar_texto(texto_original)
+
+        if texto_limpio:
             procesados.append({
-                "texto_original": c.get("texto", ""),
+                "texto_original": texto_original,
                 "texto_limpio": texto_limpio,
                 "autor": c.get("autor", ""),
                 "fecha": c.get("fecha", ""),
                 "likes": c.get("likes", 0)
             })
+
     return procesados
