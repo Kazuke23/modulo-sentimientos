@@ -10,8 +10,7 @@ def limpiar_texto(texto: str) -> str:
     # Quitar menciones
     texto = re.sub(r'@\w+', '', texto)
     
-    # 🔥 NO elimines emojis completamente (ayudan al sentimiento)
-    # solo limpia espacios raros
+    # Mantener emojis y texto
     texto = re.sub(r'\s+', ' ', texto).strip()
     
     return texto
@@ -23,13 +22,13 @@ def preprocesar_comentarios(comentarios: list) -> list:
         texto_original = c.get("texto", "")
         texto_limpio = limpiar_texto(texto_original)
 
-        if texto_limpio:
-            procesados.append({
-                "texto_original": texto_original,
-                "texto_limpio": texto_limpio,
-                "autor": c.get("autor", ""),
-                "fecha": c.get("fecha", ""),
-                "likes": c.get("likes", 0)
-            })
+        # 🔥 NO FILTRAR NADA
+        procesados.append({
+            "texto_original": texto_original,
+            "texto_limpio": texto_limpio,
+            "autor": c.get("autor", ""),
+            "fecha": c.get("fecha", ""),
+            "likes": c.get("likes", 0)
+        })
 
     return procesados
