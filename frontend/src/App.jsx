@@ -20,14 +20,11 @@ export default function App() {
     setError("")
     setResultado(null)
     try {
-      const res = await axios.post("https://icy-overfill-footpad.ngrok-free.dev/analizar", {
+      const res = await axios.post("https://modulo-sentimientos.onrender.com/analizar", {
         url,
         max_comentarios: maxComentarios,
-        },{
-        headers: {
-          "ngrok-skip-browser-warning": "true"
-        }
-      })
+        },
+      )
       setResultado(res.data)
     } catch {
       setError("Error al conectar con el servidor. ¿Está corriendo FastAPI?")
