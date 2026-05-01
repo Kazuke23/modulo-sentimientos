@@ -1,7 +1,7 @@
 import requests
 import os
 
-API_URL = "https://api-inference.huggingface.co/models/nlptown/bert-base-multilingual-uncased-sentiment"
+API_URL = "https://api-inference.huggingface.co/models/pysentimiento/robertuito-sentiment-analysis"
 
 HEADERS = {
     "Authorization": f"Bearer {os.getenv('HF_TOKEN')}",
