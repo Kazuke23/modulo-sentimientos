@@ -1,3 +1,5 @@
+# backend/preprocesador.py
+
 import re
 
 def limpiar_texto(texto: str) -> str:
@@ -10,7 +12,7 @@ def limpiar_texto(texto: str) -> str:
     # Quitar menciones
     texto = re.sub(r'@\w+', '', texto)
     
-    # Mantener emojis y texto
+    # ⚠️ MENOS AGRESIVO (no eliminar todo)
     texto = re.sub(r'\s+', ' ', texto).strip()
     
     return texto
@@ -22,7 +24,7 @@ def preprocesar_comentarios(comentarios: list) -> list:
         texto_original = c.get("texto", "")
         texto_limpio = limpiar_texto(texto_original)
 
-        # 🔥 NO FILTRAR NADA
+        # 🔥 NO FILTRAR
         procesados.append({
             "texto_original": texto_original,
             "texto_limpio": texto_limpio,
