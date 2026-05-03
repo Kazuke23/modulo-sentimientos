@@ -75,4 +75,5 @@ def chat(solicitud: SolicitudChat):
         )
         return {"respuesta": response.content[0].text}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        print(f"ERROR CHAT: {type(e).__name__}: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"{type(e).__name__}: {str(e)}")
