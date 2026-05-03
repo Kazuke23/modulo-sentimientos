@@ -68,7 +68,7 @@ def chat(solicitud: SolicitudChat):
     try:
         client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
         response = client.messages.create(
-            model="claude-3-haiku-20240307",
+            model="claude-3-5-haiku-20241022",
             max_tokens=200,
             system=solicitud.contexto,
             messages=[{"role": m.role, "content": m.content} for m in solicitud.mensajes]
