@@ -109,3 +109,25 @@
   font-weight: 700;
   color: var(--text-primary);
 }
+
+.lista-toggle {
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+.lista-flecha {
+  font-size: 14px;
+  color: var(--text-muted);
+  transition: transform 0.2s;
+}
+
+.lista-contenido {
+  margin-top: 20px;
+}

@@ -1,0 +1,127 @@
+/* src/styles/ChatIA.css */
+.chat-wrapper {
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: var(--shadow-card);
+  margin-top: 24px;
+}
+
+.chat-mensajes {
+  min-height: 200px;
+  max-height: 400px;
+  overflow-y: auto;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chat-burbuja {
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 85%;
+  font-family: var(--font-body);
+  white-space: pre-wrap;
+}
+
+.chat-burbuja.user {
+  background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(124,58,237,0.1));
+  border: 1px solid rgba(0,212,255,0.2);
+  color: var(--text-primary);
+  align-self: flex-end;
+}
+
+.chat-burbuja.assistant {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  align-self: flex-start;
+}
+
+.chat-burbuja.thinking {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  align-self: flex-start;
+  font-style: italic;
+}
+
+.chat-input-row {
+  display: flex;
+  gap: 10px;
+}
+
+.chat-input {
+  flex: 1;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.chat-input::placeholder { color: var(--text-dim); }
+
+.chat-input:focus {
+  border-color: rgba(0,212,255,0.4);
+  box-shadow: 0 0 0 3px rgba(0,212,255,0.08);
+}
+
+.chat-btn {
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #00D4FF, #7C3AED);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  white-space: nowrap;
+}
+
+.chat-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,212,255,0.3);
+}
+
+.chat-btn:disabled {
+  background: rgba(255,255,255,0.1);
+  color: var(--text-dim);
+  cursor: not-allowed;
+}
+
+.chat-sugerencias {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.chip {
+  padding: 6px 14px;
+  background: rgba(0,212,255,0.08);
+  border: 1px solid rgba(0,212,255,0.2);
+  border-radius: 100px;
+  font-size: 12px;
+  color: var(--accent-cyan);
+  cursor: pointer;
+  transition: background 0.2s;
+  font-family: var(--font-body);
+}
+
+.chip:hover:not(:disabled) {
+  background: rgba(0,212,255,0.15);
+}
+
+.chip:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

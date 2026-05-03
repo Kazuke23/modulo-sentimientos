@@ -6,6 +6,7 @@ import Formulario from "./components/Formulario"
 import Resumen from "./components/Resumen"
 import GraficaTorta from "./components/GraficaTorta"
 import ListaComentarios from "./components/ListaComentarios"
+import ChatIA from "./components/ChatIA"
 
 export default function App() {
   const [url, setUrl] = useState("")
@@ -15,7 +16,7 @@ export default function App() {
   const [error, setError] = useState("")
 
   const analizar = async () => {
-    if (!url) { setError("Por favor ingresa una URL de Facebook"); return }
+    if (!url) { setError("Por favor ingresa una URL de Facebook o Instagram"); return }
     setCargando(true)
     setError("")
     setResultado(null)
@@ -23,14 +24,13 @@ export default function App() {
       const res = await axios.post("https://modulo-sentimientos.onrender.com/analizar", {
         url,
         max_comentarios: maxComentarios,
-        },
-      )
+      })
       setResultado(res.data)
     } catch {
-      setError("Error al conectar con el servidor. ¿Está corriendo FastAPI?")
+      setError("Error al conectar con el servidor.")
     } finally {
       setCargando(false)
-    } 
+    }
   }
 
   return (
@@ -46,6 +46,7 @@ export default function App() {
           <Resumen resumen={resultado.resumen} total={resultado.total_comentarios} />
           <GraficaTorta resumen={resultado.resumen} />
           <ListaComentarios comentarios={resultado.comentarios} />
+          <ChatIA comentarios={resultado.comentarios} url={url} />
         </>
       )}
     </div>
