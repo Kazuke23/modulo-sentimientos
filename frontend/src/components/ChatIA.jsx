@@ -48,24 +48,17 @@ Instrucciones:
     setCargando(true)
 
     try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
+      const res = await fetch("https://modulo-sentimientos.onrender.com/chat", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": import.meta.env.VITE_ANTHROPIC_API_KEY,
-          "anthropic-version": "2023-06-01",
-          "anthropic-dangerous-allow-browser": "true"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 1000,
-          system: contexto,
-          messages: nuevosMs.map(m => ({ role: m.role, content: m.content }))
+          contexto: contexto,
+          mensajes: nuevosMs.map(m => ({ role: m.role, content: m.content }))
         })
       })
 
       const data = await res.json()
-      const respuesta = data.content?.[0]?.text || "No pude generar una respuesta."
+      const respuesta = data.respuesta || "No pude generar una respuesta."
       setMensajes(prev => [...prev, { role: "assistant", content: respuesta }])
     } catch (e) {
       setMensajes(prev => [...prev, {
